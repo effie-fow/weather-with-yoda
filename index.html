@@ -4,10 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather With Yoda</title>
-    <link rel="stylesheet" href="./styles/index.scss" />
+    <link rel="stylesheet" href="./styles/index.css" />
     <script type="module" src="./scripts/index.js"></script>
   </head>
   <body>
-    <h1>TEST</h1>
+    <section class="weather-forecast">
+      <div class="weather-forecast__buttons-container">
+        <span class="weather-forecast__button weather-forecast__button--day-1"
+          >Today</span
+        >
+        <span class="weather-forecast__button weather-forecast__button--day-2"
+          >Tomorrow</span
+        >
+        <span class="weather-forecast__button weather-forecast__button--day-3"
+          >Beyond</span
+        >
+      </div>
+      <div class="weather-forecast__forecast-container"></div>
+    </section>
   </body>
 </html>

@@ -1,0 +1,25 @@
+@use "./partials/base/resets";
+
+.weather-forecast {
+  &__buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 1rem 5rem;
+  }
+
+  &__button {
+    display: inline-block;
+    text-align: center;
+    background-color: navy;
+    color: white;
+    padding: 1rem 1.5rem;
+    min-width: 9rem;
+    border-radius: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
