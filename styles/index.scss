@@ -1,7 +1,11 @@
 @use "./partials/base/resets";
+@use "./partials/base/typography";
 
 .weather-forecast {
+  border: 1px solid green;
+
   &__buttons-container {
+    max-width: 60rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -21,5 +25,72 @@
     &:hover {
       cursor: pointer;
     }
+  }
+
+  &__background {
+    border: 1px solid yellow;
+
+    &--rainy {
+      background-image: url(../assets/images/background-rain.jpg);
+      background-size: cover;
+      background-position: center;
+    }
+
+    &--cloudy {
+      background-image: url(../assets/images/background-cloudy.jpg);
+      background-size: cover;
+      background-position: center;
+    }
+
+    &--sunny {
+      background-image: url(../assets/images/background-sunny.jpg);
+      background-size: cover;
+      background-position: center;
+    }
+  }
+
+  &__content-container {
+    max-width: 60rem;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    padding: 1rem 1rem 0rem;
+  }
+
+  &__yoda-img-container {
+    height: 30rem;
+  }
+
+  &__yoda-img {
+    height: 100%;
+  }
+
+  &__forecast-container {
+    margin-right: 5%;
+    padding: 1rem 2rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+  }
+
+  &__temperature {
+    font-family: "new-amsterdam";
+    font-size: 4rem;
+    margin: 0;
+  }
+
+  &__condition {
+    font-family: "star-font";
+    font-size: 1.8rem;
+    margin: 0;
+  }
+
+  &__precipitation {
+    font-family: "new-amsterdam";
+    font-size: 2.2rem;
+    margin: 0;
   }
 }

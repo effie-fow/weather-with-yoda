@@ -5,6 +5,7 @@ import { appendNewElement } from "./utils.js";
 const API_KEY = "182df03964874f7891b92838241508";
 
 const weatherForecastEl = document.querySelector(".weather-forecast");
+const backgroundEl = document.querySelector(".weather-forecast__background");
 const forecastContainerEl = document.querySelector(
   ".weather-forecast__forecast-container"
 );
@@ -40,6 +41,13 @@ const getDayWeather = (threeDayForecast, dayIndex) => {
   temperatureEl.innerText = `${todayTemperature}°C`;
   conditionEl.innerText = `${todayCondition}`;
   precipitationEl.innerText = `Chance of rain: ${todayChanceOfRain}%`;
+
+  if (todayChanceOfRain > 70) {
+    backgroundEl.classList.remove("weather-forecast__background--sunny");
+    backgroundEl.classList.add("weather-forecast__background--rainy");
+  } else if (todayCondition.toLowerCase() === "sunny") {
+    backgroundEl.classList.add("weather-forecast__background--sunny");
+  }
 };
 
 const getWeather = async (city, dayIndex) => {
