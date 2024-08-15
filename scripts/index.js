@@ -5,14 +5,26 @@ const API_KEY = "182df03964874f7891b92838241508";
 
 const weatherData = new WeatherApi(API_KEY);
 
-const getWeather = async (city) => {
+const getDayWeather = (threeDayForecast, dayIndex) => {
+  const todayTemperature = threeDayForecast[dayIndex].day.avgtemp_c;
+  const todayCondition = threeDayForecast[dayIndex].day.condition.text;
+  const todayChanceOfRain = threeDayForecast[dayIndex].day.daily_chance_of_rain;
+
+  const weatherObject = {
+    temperature: todayTemperature,
+    condition: todayCondition,
+    chanceOfRain: todayChanceOfRain,
+  };
+  console.log(weatherObject);
+};
+
+const getWeather = async (city, dayIndex) => {
   try {
-    const weatherForecast = await weatherData.getWeather(city);
-    console.log(weatherForecast);
+    const threeDayForecast = await weatherData.getWeather(city);
+    getDayWeather(threeDayForecast, dayIndex);
   } catch (error) {
     console.error(error);
   }
 };
 
-console.log(weatherData);
-getWeather("London");
+getWeather("London", 2);
