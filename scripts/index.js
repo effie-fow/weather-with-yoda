@@ -23,6 +23,10 @@ const weatherData = new WeatherApi(API_KEY);
 const quoteData = new RandomQuote();
 const yodaTranslationData = new YodaTranslator();
 
+const yodaHumOne = new Audio("../assets/audio/yoda-1.mp3");
+const yodaHumTwo = new Audio("../assets/audio/yoda-2.mp3");
+const yodaHumThree = new Audio("../assets/audio/yoda-3.mp3");
+
 const removeModifiers = (element) => {
   element.classList.remove(
     "weather-forecast__background--sunny",
@@ -106,10 +110,7 @@ const getTranslation = async (quote) => {
     const quoteToJSON = JSON.stringify(quote);
     const translation = await yodaTranslationData.translateQuote(quoteToJSON);
     return translation;
-  } catch (error) {
-    console.error(
-      `We can't 'Yodafify' the inpsirational quote right now. ${error}`
-    );
+  } catch {
     return quote;
   }
 };
@@ -137,14 +138,17 @@ const getQuote = async () => {
 buttonDayOne.addEventListener("click", async () => {
   await getWeather("London", 0);
   getQuote();
+  yodaHumOne.play();
 });
 
 buttonDayTwo.addEventListener("click", async () => {
   await getWeather("London", 1);
   getQuote();
+  yodaHumTwo.play();
 });
 
 buttonDayThree.addEventListener("click", async () => {
   await getWeather("London", 2);
   getQuote();
+  yodaHumThree.play();
 });
