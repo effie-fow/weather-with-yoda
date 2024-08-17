@@ -1,4 +1,3 @@
-import axios from "./axios.js";
 import { WeatherApi } from "./weather-api.js";
 import { RandomQuote } from "./random-quotes-api.js";
 import { appendNewElement } from "./utils.js";
