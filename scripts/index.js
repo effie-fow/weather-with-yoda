@@ -2,7 +2,7 @@ import axios from "./axios.js";
 import { WeatherApi } from "./weather-api.js";
 import { RandomQuote } from "./random-quotes-api.js";
 import { appendNewElement } from "./utils.js";
-// import { YodaTranslator } from "./yoda-translator-api.js";
+import { YodaTranslator } from "./yoda-translator-api.js";
 
 const API_KEY = "182df03964874f7891b92838241508";
 
@@ -21,7 +21,18 @@ const yodaQuoteContainer = document.querySelector(".yoda-quote");
 
 const weatherData = new WeatherApi(API_KEY);
 const quoteData = new RandomQuote();
-// const yodaTranslationData = new YodaTranslator();
+const yodaTranslationData = new YodaTranslator();
+
+const removeModifiers = (element) => {
+  element.classList.remove(
+    "weather-forecast__background--sunny",
+    "weather-forecast__background--rainy",
+    "weather-forecast__background--cloudy",
+    "weather-forecast__background--snow",
+    "weather-forecast__background--ice",
+    "weather-forecast__background--thunder"
+  );
+};
 
 const getDayWeather = (threeDayForecast, dayIndex) => {
   const todayTemperature = threeDayForecast[dayIndex].day.avgtemp_c;
@@ -48,31 +59,35 @@ const getDayWeather = (threeDayForecast, dayIndex) => {
   conditionEl.innerText = `${todayCondition}`;
   precipitationEl.innerText = `Chance of rain: ${todayChanceOfRain}%`;
 
-  if (todayChanceOfRain > 70) {
-    backgroundEl.classList.remove(
-      "weather-forecast__background--sunny",
-      "weather-forecast__background--cloudy"
-    );
+  if (todayCondition.toLowerCase().includes("rain")) {
+    removeModifiers(backgroundEl);
     backgroundEl.classList.add("weather-forecast__background--rainy");
     yodaEl.setAttribute("src", "./assets/images/yoda.png");
   } else if (todayCondition.toLowerCase() === "sunny") {
-    backgroundEl.classList.remove(
-      "weather-forecast__background--cloudy",
-      "weather-forecast__background--rainy"
-    );
+    removeModifiers(backgroundEl);
     backgroundEl.classList.add("weather-forecast__background--sunny");
     yodaEl.setAttribute("src", "./assets/images/yoda-sunny.png");
   } else if (
-    todayCondition.toLowerCase() === "partly cloudy" ||
-    todayCondition.toLowerCase() === "cloudy" ||
-    todayCondition.toLowerCase() === "overcast"
+    todayCondition.toLowerCase().includes("cloudy") ||
+    todayCondition.toLowerCase() === "overcast" ||
+    todayCondition.toLowerCase() === "mist" ||
+    todayCondition.toLowerCase() === "fog"
   ) {
-    backgroundEl.classList.remove(
-      "weather-forecast__background--sunny",
-      "weather-forecast__background--rainy"
-    );
+    removeModifiers(backgroundEl);
     backgroundEl.classList.add("weather-forecast__background--cloudy");
     yodaEl.setAttribute("src", "./assets/images/yoda.png");
+  } else if (todayCondition.toLowerCase().includes("snow")) {
+    removeModifiers(backgroundEl);
+    backgroundEl.classList.add("weather-forecast__background--snow");
+  } else if (
+    todayCondition.toLowerCase().includes("ice") ||
+    todayCondition.toLowerCase().includes("freezing")
+  ) {
+    removeModifiers(backgroundEl);
+    backgroundEl.classList.add("weather-forecast__background--ice");
+  } else if (todayCondition.toLowerCase().includes("thunder")) {
+    removeModifiers(backgroundEl);
+    backgroundEl.classList.add("weather-forecast__background--thunder");
   }
 };
 
@@ -86,14 +101,18 @@ const getWeather = async (city, dayIndex) => {
   }
 };
 
-// const getTranslation = async (quote) => {
-//   try {
-//     const translation = await yodaTranslationData.translateQuote(quote);
-//     return translation;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
+const getTranslation = async (quote) => {
+  try {
+    const quoteToJSON = JSON.stringify(quote);
+    const translation = await yodaTranslationData.translateQuote(quoteToJSON);
+    return translation;
+  } catch (error) {
+    console.error(
+      `We can't 'Yodafify' the inpsirational quote right now. ${error}`
+    );
+    return quote;
+  }
+};
 
 const getQuote = async () => {
   try {
@@ -107,10 +126,9 @@ const getQuote = async () => {
       "yoda-quote__quote"
     );
 
-    // const quoteToJSON = JSON.stringify(quote);
-    // const yodaQuote = await getTranslation(quoteToJSON);
+    const yodaQuote = await getTranslation(quote);
 
-    quoteEl.innerText = `"${quote}"`;
+    quoteEl.innerText = `${yodaQuote}`;
   } catch (error) {
     console.error(error);
   }

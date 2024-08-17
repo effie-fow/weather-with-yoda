@@ -74,6 +74,24 @@
       background-size: cover;
       background-position: center;
     }
+
+    &--snow {
+      background-image: url(../assets/images/background-snow.jpg);
+      background-size: cover;
+      background-position: center;
+    }
+
+    &--ice {
+      background-image: url(../assets/images/background-ice.jpg);
+      background-size: cover;
+      background-position: center;
+    }
+
+    &--thunder {
+      background-image: url(../assets/images/background-thunderstorm.jpg);
+      background-size: cover;
+      background-position: center;
+    }
   }
 
   &__content-container {
